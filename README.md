@@ -13,4 +13,9 @@ $ python3 NNPS.py
 - scikit-learn (==0.21.2)
 - stanfordnlp (==0.2.0)  
 
+Use the following command to install all dependencies. 
+```
+    pip install requirement.txt
+```
+
 Notice: Too high version of sklearn will probably not work. We use 0.21.2 for sklearn.
