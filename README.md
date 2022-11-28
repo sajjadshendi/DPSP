@@ -7,9 +7,14 @@ The setup for our problem is outlined in `NNPS.py`. It uses a simple neural netw
 $ python3 NNPS.py
 ```
 ## Requirement
-.numpy (==1.18.1)\
-.Keras (==2.2.4)\
-.pandas (==1.0.1)\
-.scikit-learn (==0.21.2)\
-.stanfordnlp (==0.2.0)\
+- numpy (==1.18.1)
+- Keras (==2.2.4)
+- pandas (==1.0.1)
+- scikit-learn (==0.21.2)
+- stanfordnlp (==0.2.0)  
+numpy (==1.18.1)\
+Keras (==2.2.4)\
+pandas (==1.0.1)\
+scikit-learn (==0.21.2)\
+stanfordnlp (==0.2.0)\
 Notice: Too high version of sklearn will probably not work. We use 0.21.2 for sklearn.
