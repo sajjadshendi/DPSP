@@ -4,7 +4,6 @@
 # In[ ]:
 
 
-from NLPProcess import NLPProcess
 from numpy.random import seed
 seed(1)
 import csv
