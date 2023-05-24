@@ -71,13 +71,12 @@ def prepare(df_drug, feature_list, vector_size,mechanism,action,drugA,drugB):
     # Use the dictionary to obtain feature vector and label
     new_feature = []
     new_label = []
-    name_to_id = {}
     for i in range(len(d_event)):
         new_feature.append(d_feature[drugA[i]]+ d_feature[drugB[i]])
         new_label.append(d_label[d_event[i]])
     new_feature = np.array(new_feature)
     new_label = np.array(new_label)
-    return (new_feature, new_label, event_num)
+    return (new_feature, new_label)
 #----------------------------------------------------------------------------------------
 def feature_vector(feature_name, df, vector_size):
     # df are the 572 kinds of drugs
@@ -122,7 +121,7 @@ def get_index(label_matrix, event_num, seed, CV):
     return index_all_class
 #------------------------------------------------------------------------------------------------
 def cross_validation(feature_matrix, label_matrix, event_num, seed, CV):
-    all_eval_type = 11
+    all_eval_type = 6
     result_all = np.zeros((all_eval_type, 1), dtype=float)
     each_eval_type = 6
     result_eve = np.zeros((event_num, each_eval_type), dtype=float)
@@ -166,7 +165,7 @@ def cross_validation(feature_matrix, label_matrix, event_num, seed, CV):
     return result_all, positive_negative, result_eve
 #-------------------------------------------------------------------------------------------------------------
 def evaluate(pred_type, pred_score, y_test, event_num):
-    all_eval_type = 11
+    all_eval_type = 6
     result_all = np.zeros((all_eval_type, 1), dtype=float)
     each_eval_type = 6
     result_eve = np.zeros((event_num, each_eval_type), dtype=float)
@@ -177,15 +176,10 @@ def evaluate(pred_type, pred_score, y_test, event_num):
 
     result_all[0] = accuracy_score(y_test, pred_type)
     result_all[1] = roc_aupr_score(y_one_hot, pred_score, average='micro')
-    result_all[2] = roc_aupr_score(y_one_hot, pred_score, average='macro')
-    result_all[3] = roc_auc_score(y_one_hot, pred_score, average='micro')
-    result_all[4] = roc_auc_score(y_one_hot, pred_score, average='macro')
-    result_all[5] = f1_score(y_test, pred_type, average='micro')
-    result_all[6] = f1_score(y_test, pred_type, average='macro')
-    result_all[7] = precision_score(y_test, pred_type, average='micro')
-    result_all[8] = precision_score(y_test, pred_type, average='macro')
-    result_all[9] = recall_score(y_test, pred_type, average='micro')
-    result_all[10] = recall_score(y_test, pred_type, average='macro')
+    result_all[2] = roc_auc_score(y_one_hot, pred_score, average='micro')
+    result_all[3] = f1_score(y_test, pred_type, average='macro')
+    result_all[4] = precision_score(y_test, pred_type, average='macro')
+    result_all[5] = recall_score(y_test, pred_type, average='macro')
     positive_negative= np.hstack(self_metric_calculate(y_test, pred_type))
     for i in range(event_num):
         result_eve[i, 0] = accuracy_score(y_one_hot.take([i], axis=1).ravel(), pred_one_hot.take([i], axis=1).ravel())
