@@ -285,6 +285,6 @@ drugB = df_event['drugB']
 #--------------------------------------------------------------------------------------------
 seed = 0
 CV = 5
-new_feature, new_label, event_num = prepare(df_drug, feature_list, vector_size, mechanism,action,drugA,drugB)
+new_feature, new_label = prepare(df_drug, feature_list, vector_size, mechanism,action,drugA,drugB)
 all_result, positive_negative, each_result = cross_validation(new_feature, new_label, event_num, seed, CV)
 
