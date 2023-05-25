@@ -11,7 +11,7 @@ $ python3 DPSP.py
 - Keras (==2.2.4)
 - pandas (==1.0.1)
 - scikit-learn (==0.21.2)
-- stanfordnlp (==0.2.0)  
+
 
 Use the following command to install all dependencies. 
 ```
