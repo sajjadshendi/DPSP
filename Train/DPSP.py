@@ -104,8 +104,8 @@ def feature_vector(feature_name, df, vector_size):
     sim_matrix1 = np.array(sim_matrix)
     count = 0
     pca = PCA(n_components=vector_size)  # PCA dimension
-    pca.fit(sim_matrix)
-    sim_matrix = pca.transform(sim_matrix)
+    pca.fit(sim_matrix1)
+    sim_matrix = pca.transform(sim_matrix1)
     return sim_matrix
 #-------------------------------------------------------------------------------------------------
 def get_index(label_matrix, event_num, seed, CV):
@@ -169,8 +169,8 @@ def evaluate(pred_type, pred_score, y_test, event_num):
     result_all = np.zeros((all_eval_type, 1), dtype=float)
     each_eval_type = 6
     result_eve = np.zeros((event_num, each_eval_type), dtype=float)
-    y_one_hot = label_binarize(y_test, np.arange(event_num))
-    pred_one_hot = label_binarize(pred_type, np.arange(event_num))
+    y_one_hot = label_binarize(y_test, classes = np.arange(event_num))
+    pred_one_hot = label_binarize(pred_type, classes = np.arange(event_num))
 
     precision, recall, th = multiclass_precision_recall_curve(y_one_hot, pred_score)
 
@@ -236,7 +236,7 @@ def multiclass_precision_recall_curve(y_true, y_score):
 def roc_aupr_score(y_true, y_score, average="macro"):
     def _binary_roc_aupr_score(y_true, y_score):
         precision, recall, pr_thresholds = precision_recall_curve(y_true, y_score)
-        return auc(recall, precision, reorder=True)
+        return auc(recall, precision)
 
     def _average_binary_score(binary_metric, y_true, y_score, average):  # y_true= y_one_hot
         if average == "binary":
@@ -263,7 +263,7 @@ event_num = 65
 droprate = 0.3                                                                
 vector_size = 572                                                             
 df_drug = pd.read_pickle('df.pkl')                                            
-conn = sqlite3.connect("event.db")                                                             
+conn = sqlite3.connect("/content/DPSP/Train/event.db")                                                             
 feature_list=df_drug[["side", "target", "enzyme","pathway","smile"]]          
 extraction = pd.read_sql('select * from extraction;', conn)
 mechanism = extraction['mechanism']
@@ -272,16 +272,16 @@ drugA = extraction['drugA']
 drugB = extraction['drugB']
 #-------------------------------------------------------------------------------------------
 #Dataset2 (DS2):
-event_num = 100
-droprate = 0.3
-vector_size = 1258
-df_drug = pd.read_csv('drug_information_1258.csv')
-df_event = pd.read_csv('drug_interaction.csv')
-feature_list=df_drug[["target", "enzyme","smile"]]
-mechanism = df_event['mechanism']
-action = df_event['action']
-drugA = df_event['drugA']
-drugB = df_event['drugB']
+#event_num = 100
+#droprate = 0.3
+#vector_size = 1258
+#df_drug = pd.read_csv('drug_information_1258.csv')
+#df_event = pd.read_csv('drug_interaction.csv')
+#feature_list=df_drug[["target", "enzyme","smile"]]
+#mechanism = df_event['mechanism']
+#action = df_event['action']
+#drugA = df_event['drugA']
+#drugB = df_event['drugB']
 #--------------------------------------------------------------------------------------------
 seed = 0
 CV = 5
